@@ -29,6 +29,9 @@ void HashTable::addValue(int value)
 
 void HashTable::removeValue(int value)
 {
+	int bucketNumber = value % moduloHashing;
+	this->buckets[bucketNumber].removeValue(value);
+	//Manage collisions, value could be in another bucket
 }
 
 int HashTable::search(int value)

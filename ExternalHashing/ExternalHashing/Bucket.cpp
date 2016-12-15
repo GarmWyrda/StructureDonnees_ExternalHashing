@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Bucket.h"
+#include "ValueNotFoundException.h"
 
 
 Bucket::Bucket()
@@ -31,6 +32,14 @@ void Bucket::addValue(int value)
 
 void Bucket::removeValue(int value)
 {
+	std::vector<int>::iterator position = std::find(this->values.begin(), this->values.end(), value);
+	if (position != this->values.end()) { // == myVector.end() means the element was not found
+		this->values.erase(position);
+	}
+	else {
+		throw ValueNotFoundException();
+		//Manage collisions, value could be in another bucket
+	}
 }
 
 int Bucket::search(int value)
