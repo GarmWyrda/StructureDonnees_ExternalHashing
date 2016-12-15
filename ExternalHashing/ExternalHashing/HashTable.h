@@ -3,6 +3,8 @@
 #include "Bucket.h"
 using namespace std;
 
+#define moduloHashing 5
+
 class HashTable
 {
 private:
@@ -10,5 +12,8 @@ private:
 public:
 	HashTable();
 	~HashTable();
+	void addValue(int value);
+	void removeValue(int value);
+	int search(int value);
 };
 
