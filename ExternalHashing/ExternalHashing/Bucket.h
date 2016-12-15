@@ -3,6 +3,8 @@
 
 using namespace std;
 
+#define maxSize 5
+
 class Bucket
 {
 private:
@@ -10,6 +12,8 @@ private:
 public:
 	Bucket();
 	~Bucket();
+	vector<int> getValues();
+	bool isFull();
 	void addValue(int value);
 	void removeValue(int value);
 	int search(int value);

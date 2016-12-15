@@ -146,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bucket.h" />
+    <ClInclude Include="FullTableException.h" />
     <ClInclude Include="HashTable.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -153,6 +154,7 @@
   <ItemGroup>
     <ClCompile Include="Bucket.cpp" />
     <ClCompile Include="ExternalHashing.cpp" />
+    <ClCompile Include="FullTableException.cpp" />
     <ClCompile Include="HashTable.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

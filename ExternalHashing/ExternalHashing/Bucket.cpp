@@ -4,7 +4,7 @@
 
 Bucket::Bucket()
 {
-	this->values = vector<int>(5);
+	this->values = vector<int>(maxSize);
 }
 
 
@@ -12,10 +12,21 @@ Bucket::~Bucket()
 {
 }
 
+vector<int> Bucket::getValues()
+{
+	return this->values;
+}
+
+bool Bucket::isFull()
+{
+	return this->values.size() >= maxSize;
+}
+
 void Bucket::addValue(int value)
 {
-	if(this->values.size)
-	this->values.push_back(value);
+	if (this->values.size() < maxSize) {
+		this->values.push_back(value);
+	}
 }
 
 void Bucket::removeValue(int value)
