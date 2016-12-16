@@ -7,7 +7,7 @@
 HashTable::HashTable()
 {
 	this->buckets = vector<Bucket>(moduloHashing);
-	this->separators = vector<int>();
+	this->separators = vector<int>(moduloHashing,-1);
 }
 
 
@@ -90,8 +90,15 @@ ostream & operator<<(ostream & ostr, HashTable & hashtable)
 {
 	int i = 0;
 	for (Bucket& bucket : hashtable.buckets) {
-		ostr << "-------Bucket " << i++ << "----------" << std::endl;
-		ostr << bucket << std::endl ;
+		ostr << "-------Bucket " << i << "----------" << std::endl;
+		ostr << bucket;
+		if (hashtable.separators[i] != -1) {
+			ostr << "Separateur : " << hashtable.separators[i] << std::endl;
+		}
+		else {
+			ostr << "Separateur : Pas encore de separateur" << std::endl;
+		}
+		i++;
 	}
 	return ostr;
 }
