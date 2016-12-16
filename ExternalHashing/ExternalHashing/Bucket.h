@@ -17,7 +17,7 @@ public:
 	bool isFull();
 	void addValue(int value);
 	void removeValue(int value);
-	int search(int value);
+	bool search(int value);
 	int evaluateSeparator();
 };
 
