@@ -146,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bucket.h" />
+    <ClInclude Include="CommandProcessor.h" />
     <ClInclude Include="FullTableException.h" />
     <ClInclude Include="HashTable.h" />
     <ClInclude Include="stdafx.h" />
@@ -154,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bucket.cpp" />
+    <ClCompile Include="CommandProcessor.cpp" />
     <ClCompile Include="ExternalHashing.cpp" />
     <ClCompile Include="FullTableException.cpp" />
     <ClCompile Include="HashTable.cpp" />

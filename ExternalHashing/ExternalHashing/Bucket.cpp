@@ -5,7 +5,7 @@
 
 Bucket::Bucket()
 {
-	this->values = vector<int>(maxSize);
+	this->values = vector<int>();
 }
 
 
