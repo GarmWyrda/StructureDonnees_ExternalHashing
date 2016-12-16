@@ -19,5 +19,6 @@ public:
 	int search(int value);
 	void swapAndSort(int value, int position, int bucketNumber);
 	int signature(int value);
+	friend ostream& operator<<(ostream& ostr, HashTable& hashtable);
 };
 

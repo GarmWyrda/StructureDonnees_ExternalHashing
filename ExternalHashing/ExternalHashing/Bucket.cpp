@@ -68,3 +68,11 @@ int Bucket::evaluateSignature()
 {
 	return 0;
 }
+
+ostream & operator<<(ostream & ostr, Bucket bucket)
+{
+	for (int value : bucket.values) {
+		ostr << value << std::endl;
+	}
+	return ostr;
+}

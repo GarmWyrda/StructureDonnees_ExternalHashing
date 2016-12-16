@@ -23,6 +23,11 @@ void CommandProcessor::printHelp()
 	std::cout << "quitter : Quitte l'application" << std::endl;
 }
 
+void CommandProcessor::printHashTable()
+{
+	std::cout << "Affichage de la table" << std::endl << hashTable << std::endl;
+}
+
 void CommandProcessor::processCommand(string command)
 {
 	if (command == "aide" || command == "?") {
@@ -38,7 +43,7 @@ void CommandProcessor::processCommand(string command)
 
 	}
 	else if (command == "afficher") {
-
+		printHashTable();
 	}
 	else if (command == "rechercher") {
 
@@ -49,3 +54,4 @@ void CommandProcessor::quit()
 {
 	this->shouldExit = true;
 }
+
