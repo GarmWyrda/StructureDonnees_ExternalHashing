@@ -12,6 +12,7 @@ public:
 	CommandProcessor(HashTable* hashTable,bool& shouldExit);
 	virtual ~CommandProcessor();
 	void printHelp();
+	void printHashTable();
 	void processCommand(string command);
 	void quit();
 };

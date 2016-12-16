@@ -15,5 +15,6 @@ public:
 	void addValue(int value);
 	void removeValue(int value);
 	int search(int value);
+	friend ostream& operator<<(ostream& ostr, HashTable& hashtable);
 };
 

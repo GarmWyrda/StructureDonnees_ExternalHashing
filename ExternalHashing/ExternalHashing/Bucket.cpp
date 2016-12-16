@@ -5,7 +5,7 @@
 
 Bucket::Bucket()
 {
-	this->values = vector<int>();
+	this->values = vector<int>(maxSize,-1);
 }
 
 
@@ -54,4 +54,12 @@ bool Bucket::search(int value)
 int Bucket::evaluateSeparator()
 {
 	return 0;
+}
+
+ostream & operator<<(ostream & ostr, Bucket bucket)
+{
+	for (int value : bucket.values) {
+		ostr << value << std::endl;
+	}
+	return ostr;
 }

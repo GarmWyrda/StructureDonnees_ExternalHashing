@@ -50,3 +50,12 @@ int HashTable::search(int value)
 	return 0;
 }
 
+ostream & operator<<(ostream & ostr, HashTable & hashtable)
+{
+	int i = 0;
+	for (Bucket& bucket : hashtable.buckets) {
+		ostr << "-------Bucket " << i++ << "----------";
+		ostr << bucket << std::endl << "-----------------" ;
+	}
+	return ostr;
+}
