@@ -34,10 +34,9 @@ bool Bucket::isFull()
 void Bucket::addValue(int value)
 {
 	if (!this->isFull()) {
-		std::vector<int>::iterator position = std::find(this->values.begin(), this->values.end(), -1);
 		int intToFind = -1;
-		int newPosition = find_if(this->values.begin(), this->values.end(), [intToFind](const int integer) {return integer == intToFind; }) - this->values.begin();
-		this->values[newPosition] = value;
+		int Position = find_if(this->values.begin(), this->values.end(), [intToFind](const int integer) {return integer == intToFind; }) - this->values.begin();
+		this->values[Position] = value;
 		
 	}
 }
