@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Bucket.h"
 #include "ValueNotFoundException.h"
+#include <algorithm>
 
 
 Bucket::Bucket()
@@ -34,12 +35,10 @@ void Bucket::addValue(int value)
 {
 	if (!this->isFull()) {
 		std::vector<int>::iterator position = std::find(this->values.begin(), this->values.end(), -1);
-		if (position != this->values.end()) { 
-			this->values.insert(position, value);
-		}
-		else {
-			//should definitely not happen, it was tested before
-		}
+		int intToFind = -1;
+		int newPosition = find_if(this->values.begin(), this->values.end(), [intToFind](const int integer) {return integer == intToFind; }) - this->values.begin();
+		this->values[newPosition] = value;
+		
 	}
 }
 
