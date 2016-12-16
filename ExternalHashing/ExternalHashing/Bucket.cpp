@@ -35,22 +35,17 @@ void Bucket::addValue(int value)
 {
 	if (!this->isFull()) {
 		int intToFind = -1;
-		int Position = find_if(this->values.begin(), this->values.end(), [intToFind](const int integer) {return integer == intToFind; }) - this->values.begin();
-		this->values[Position] = value;
+		int position = find_if(this->values.begin(), this->values.end(), [intToFind](const int integer) {return integer == intToFind; }) - this->values.begin();
+		this->values[position] = value;
 		
 	}
 }
 
 void Bucket::removeValue(int value)
 {
-	std::vector<int>::iterator position = std::find(this->values.begin(), this->values.end(), value);
-	if (position != this->values.end()) { // == myVector.end() means the element was not found
-		this->values.erase(position);
-	}
-	else {
-		throw ValueNotFoundException();
-		//Manage collisions, value could be in another bucket
-	}
+	int valueToFind = value;
+	int position = find_if(this->values.begin(), this->values.end(), [valueToFind](const int integer) {return integer == valueToFind; }) - this->values.begin();
+	this->values[position] = -1;
 }
 
 bool Bucket::search(int value)

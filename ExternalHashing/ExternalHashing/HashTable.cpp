@@ -61,7 +61,7 @@ int HashTable::search(int value)
 		bucketNumber++;
 	}
 	throw ValueNotFoundException();
-	return 0;
+	return -1;
 }
 
 void HashTable::swapAndSort(int value, int position, int bucketNumber)
