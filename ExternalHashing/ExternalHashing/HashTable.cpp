@@ -7,6 +7,7 @@
 HashTable::HashTable()
 {
 	this->buckets = vector<Bucket>(moduloHashing);
+	this->separators = vector<int>();
 }
 
 
@@ -26,6 +27,19 @@ void HashTable::addValue(int value)
 		throw FullTableException();
 	}
 	this->buckets[bucketNumber].addValue(value);
+}
+
+void HashTable::addValueWithSeparator(int value)
+{
+	int bucketNumber = value % moduloHashing;
+	while (signature(value) > this->separators[bucketNumber]) {
+		bucketNumber++;
+	}
+	int i = 0;
+	while (value > this->buckets[bucketNumber].getValues()[i]) {
+		i++;
+	}
+	swapAndSort(value, i, bucketNumber);
 }
 
 void HashTable::removeValue(int value)
@@ -48,6 +62,28 @@ int HashTable::search(int value)
 	}
 	throw ValueNotFoundException();
 	return 0;
+}
+
+void HashTable::swapAndSort(int value, int position, int bucketNumber)
+{
+	int tmpValue = this->buckets[bucketNumber].getValues()[position];
+	this->buckets[bucketNumber].getValues()[position] = value;
+
+	position++;
+	if (position > maxSize) {
+		swapAndSort(tmpValue, 0, bucketNumber + 1);
+	}
+	else if (this->buckets[bucketNumber].getValues()[position] == -1) { //test à revoir
+		this->buckets[bucketNumber].getValues()[position] = tmpValue;
+	}
+	else {
+		swapAndSort(tmpValue, position, bucketNumber);
+	}
+}
+
+int HashTable::signature(int value)
+{
+	return value;
 }
 
 ostream & operator<<(ostream & ostr, HashTable & hashtable)

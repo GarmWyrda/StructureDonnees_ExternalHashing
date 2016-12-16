@@ -5,7 +5,7 @@
 
 Bucket::Bucket()
 {
-	this->values = vector<int>(maxSize,-1);
+	this->values = vector<int>(maxSize, this->notInit);
 }
 
 
@@ -26,7 +26,13 @@ bool Bucket::isFull()
 void Bucket::addValue(int value)
 {
 	if (this->values.size() < maxSize) {
-		this->values.push_back(value);
+		std::vector<int>::iterator position = std::find(this->values.begin(), this->values.end(), -1);
+		if (position != this->values.end()) { 
+			this->values.insert(position, value);
+		}
+		else {
+			//should definitely not happen, it was tested before
+		}
 	}
 }
 
@@ -51,7 +57,7 @@ bool Bucket::search(int value)
 	return false;
 }
 
-int Bucket::evaluateSeparator()
+int Bucket::evaluateSignature()
 {
 	return 0;
 }

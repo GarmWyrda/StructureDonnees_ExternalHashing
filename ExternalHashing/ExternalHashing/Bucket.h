@@ -10,6 +10,7 @@ class Bucket
 {
 private:
 	vector<int> values;
+	const static int notInit = -1;
 public:
 	Bucket();
 	~Bucket();
@@ -20,5 +21,6 @@ public:
 	bool search(int value);
 	int evaluateSeparator();
 	friend ostream& operator<<(ostream& ostr, Bucket bucket);
+	int evaluateSignature();
 };
 
