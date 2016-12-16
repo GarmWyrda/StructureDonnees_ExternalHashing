@@ -73,7 +73,7 @@ void HashTable::swapAndSort(int value, int position, int bucketNumber)
 	if (position > maxSize) {
 		swapAndSort(tmpValue, 0, bucketNumber + 1);
 	}
-	else if (this->buckets[bucketNumber].getValues()[position] == -1) { //test à revoir
+	else if (this->buckets[bucketNumber].getValues()[position] == -1) {
 		this->buckets[bucketNumber].getValues()[position] = tmpValue;
 	}
 	else {

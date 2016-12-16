@@ -20,7 +20,14 @@ vector<int> Bucket::getValues()
 
 bool Bucket::isFull()
 {
-	return this->values.size() >= maxSize;
+	int i = 0;
+	while (i < maxSize) {
+		if (this->values[i] == -1) {
+			return false;
+		}
+		i++;
+	}
+	return true;
 }
 
 void Bucket::addValue(int value)
