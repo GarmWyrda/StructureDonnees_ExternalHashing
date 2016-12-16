@@ -32,7 +32,7 @@ bool Bucket::isFull()
 
 void Bucket::addValue(int value)
 {
-	if (this->values.size() < maxSize) {
+	if (!this->isFull()) {
 		std::vector<int>::iterator position = std::find(this->values.begin(), this->values.end(), -1);
 		if (position != this->values.end()) { 
 			this->values.insert(position, value);
