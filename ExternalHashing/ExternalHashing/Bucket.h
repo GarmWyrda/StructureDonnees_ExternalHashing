@@ -9,6 +9,7 @@ class Bucket
 {
 private:
 	vector<int> values;
+	const static int notInit = -1;
 public:
 	Bucket();
 	~Bucket();
@@ -17,6 +18,6 @@ public:
 	void addValue(int value);
 	void removeValue(int value);
 	bool search(int value);
-	int evaluateSeparator();
+	int evaluateSignature();
 };
 
