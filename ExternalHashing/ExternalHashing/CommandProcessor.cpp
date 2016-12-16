@@ -25,7 +25,7 @@ void CommandProcessor::printHelp()
 
 void CommandProcessor::printHashTable()
 {
-	std::cout << "Affichage de la table" << std::endl << hashTable << std::endl;
+	std::cout << "Affichage de la table" << std::endl << *hashTable << std::endl;
 }
 
 void CommandProcessor::processCommand(string command)

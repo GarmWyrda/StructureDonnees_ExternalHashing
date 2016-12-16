@@ -5,7 +5,7 @@
 
 Bucket::Bucket()
 {
-	this->values = vector<int>(maxSize, this->notInit);
+	this->values = vector<int>(maxSize, notInit);
 }
 
 
@@ -32,7 +32,7 @@ bool Bucket::isFull()
 
 void Bucket::addValue(int value)
 {
-	if (this->values.size() < maxSize) {
+	if (!this->isFull()) {
 		std::vector<int>::iterator position = std::find(this->values.begin(), this->values.end(), -1);
 		if (position != this->values.end()) { 
 			this->values.insert(position, value);
@@ -72,7 +72,13 @@ int Bucket::evaluateSignature()
 ostream & operator<<(ostream & ostr, Bucket bucket)
 {
 	for (int value : bucket.values) {
-		ostr << value << std::endl;
+		if (value == Bucket::notInit) {
+			ostr << "VIDE" << " ";
+		}
+		else {
+			ostr << value << " ";
+		}
 	}
+	ostr << std::endl;
 	return ostr;
 }

@@ -23,7 +23,7 @@ void HashTable::addValue(int value)
 		bucketNumber = (bucketNumber + 1) % moduloHashing;
 		i++;
 	}
-	if (i = moduloHashing) {
+	if (i == moduloHashing) {
 		throw FullTableException();
 	}
 	this->buckets[bucketNumber].addValue(value);
@@ -90,8 +90,8 @@ ostream & operator<<(ostream & ostr, HashTable & hashtable)
 {
 	int i = 0;
 	for (Bucket& bucket : hashtable.buckets) {
-		ostr << "-------Bucket " << i++ << "----------";
-		ostr << bucket << std::endl << "-----------------" ;
+		ostr << "-------Bucket " << i++ << "----------" << std::endl;
+		ostr << bucket << std::endl ;
 	}
 	return ostr;
 }

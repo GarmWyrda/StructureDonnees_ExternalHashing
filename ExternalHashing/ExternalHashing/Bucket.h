@@ -10,8 +10,8 @@ class Bucket
 {
 private:
 	vector<int> values;
-	const static int notInit = -1;
 public:
+	const static int notInit = -1;
 	Bucket();
 	~Bucket();
 	vector<int> getValues();
