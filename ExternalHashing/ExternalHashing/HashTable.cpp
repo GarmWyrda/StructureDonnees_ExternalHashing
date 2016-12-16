@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "HashTable.h"
 #include "FullTableException.h"
+#include "ValueNotFoundException.h"
 
 
 HashTable::HashTable()
@@ -36,6 +37,16 @@ void HashTable::removeValue(int value)
 
 int HashTable::search(int value)
 {
+	int bucketNumber = value % moduloHashing;
+	int i = 0;
+	while (i < moduloHashing) {
+		if (this->buckets[bucketNumber].search(value)) {
+			return bucketNumber;
+		}
+		i++;
+		bucketNumber++;
+	}
+	throw ValueNotFoundException();
 	return 0;
 }
 

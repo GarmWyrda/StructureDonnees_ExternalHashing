@@ -42,9 +42,13 @@ void Bucket::removeValue(int value)
 	}
 }
 
-int Bucket::search(int value)
+bool Bucket::search(int value)
 {
-	return 0;
+	std::vector<int>::iterator position = std::find(this->values.begin(), this->values.end(), value);
+	if (position != this->values.end()) { // == myVector.end() means the element was not found
+		return true;
+	}
+	return false;
 }
 
 int Bucket::evaluateSeparator()
