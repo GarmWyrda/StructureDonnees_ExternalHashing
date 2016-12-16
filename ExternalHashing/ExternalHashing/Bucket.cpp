@@ -5,7 +5,7 @@
 
 Bucket::Bucket()
 {
-	this->values = vector<int>(maxSize, this->notInit);
+	this->values = vector<int>(maxSize, notInit);
 }
 
 
@@ -72,7 +72,13 @@ int Bucket::evaluateSignature()
 ostream & operator<<(ostream & ostr, Bucket bucket)
 {
 	for (int value : bucket.values) {
-		ostr << value << std::endl;
+		if (value == Bucket::notInit) {
+			ostr << "VIDE" << " ";
+		}
+		else {
+			ostr << value << " ";
+		}
 	}
+	ostr << std::endl;
 	return ostr;
 }
