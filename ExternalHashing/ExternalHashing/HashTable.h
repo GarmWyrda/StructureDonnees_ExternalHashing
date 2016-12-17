@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Bucket.h"
+#include "SearchResult.h"
 using namespace std;
 
 #define moduloHashing 5
@@ -13,11 +14,11 @@ private:
 public:
 	HashTable();
 	~HashTable();
-	void addValue(int value);
-	void addValueWithSeparator(int value);
-	void removeValue(int value);
-	int search(int value);
-	void swapAndSort(int value, int position, int bucketNumber);
+	int addValue(int value);
+	int addValueWithSeparator(int value);
+	int removeValue(int value);
+	SearchResult search(int value);
+	void swapAndSort(int value, int position, int bucketNumber, int& nbAccess);
 	int signature(int value);
 	friend ostream& operator<<(ostream& ostr, HashTable& hashtable);
 };

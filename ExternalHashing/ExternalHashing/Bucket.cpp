@@ -37,7 +37,6 @@ void Bucket::addValue(int value)
 		int intToFind = -1;
 		int position = find_if(this->values.begin(), this->values.end(), [intToFind](const int integer) {return integer == intToFind; }) - this->values.begin();
 		this->values[position] = value;
-		
 	}
 }
 

@@ -41,14 +41,16 @@ void CommandProcessor::processCommand(string command)
 		std::cout << "Valeur a inserer ? ";
 		getline(std::cin, input);
 		int value = stoi(input);
-		hashTable->addValue(value);
+		int nbAccess = hashTable->addValue(value);
+		std::cout << "Valeur ajoutee dans le bucket, nobmre d'acces disque :  " << nbAccess  << "." << std::endl;
 	}
 	else if (command == "supprimer") {
 		string input;
 		std::cout << "Valeur a supprimer ? ";
 		getline(std::cin, input);
 		int value = stoi(input);
-		hashTable->removeValue(value);
+		int nbAccess = hashTable->removeValue(value);
+		std::cout << "Valeur supprimee dans le bucket, nobmre d'acces disque :  " << nbAccess << "." << std::endl;
 	}
 	else if (command == "afficher") {
 		printHashTable();
@@ -58,8 +60,8 @@ void CommandProcessor::processCommand(string command)
 		std::cout << "Valeur a rechercher ? ";
 		getline(std::cin, input);
 		int value = stoi(input);
-		int bucketIndex = hashTable->search(value);
-		std::cout << "Valeur trouvee dans le Bucket " << bucketIndex << std::endl;
+		SearchResult result = hashTable->search(value);
+		std::cout << "Valeur trouvee dans le Bucket " << result.getBucketNumber() << " Nombre d'acces disque : "  << result.getNbAccess() << std::endl;
 	}
 	else {
 		std::cout << "Commande invalide. Usage : " << std::endl;
