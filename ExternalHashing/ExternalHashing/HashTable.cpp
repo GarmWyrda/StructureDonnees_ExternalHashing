@@ -15,11 +15,14 @@ HashTable::~HashTable()
 {
 }
 
-void HashTable::addValue(int value)
+int HashTable::addValue(int value)
 {
+	int nbAccess = 0;
 	int bucketNumber = value % moduloHashing;
 	int i = 0;
+	nbAccess++;
 	while (this->buckets[bucketNumber].isFull() && i < moduloHashing) {
+		nbAccess++;
 		bucketNumber = (bucketNumber + 1) % moduloHashing;
 		i++;
 	}
@@ -27,10 +30,12 @@ void HashTable::addValue(int value)
 		throw FullTableException();
 	}
 	this->buckets[bucketNumber].addValue(value);
+	return nbAccess;
 }
 
-void HashTable::addValueWithSeparator(int value)
+int HashTable::addValueWithSeparator(int value)
 {
+	int nbAccess = 0;
 	int bucketNumber = value % moduloHashing;
 	//std::cout << bucketNumber << std::endl;
 	//std::cout << this->separators[bucketNumber] << std::endl;
@@ -49,32 +54,57 @@ void HashTable::addValueWithSeparator(int value)
 	swapAndSort(value, i, bucketNumber);
 }
 
-void HashTable::removeValue(int value)
+int HashTable::removeValue(int value)
 {
+	int nbAccess = 0;
+	int bucketNumber = value % moduloHashing;
+	int i = 0;
+	bool found = false;
+	nbAccess++;
+	vector<int> bucket = this->buckets[bucketNumber].getValues();
+	while (!found && i < moduloHashing) {
+		std::vector<int>::iterator position = std::find(bucket.begin(), bucket.end(), value);
+		if (position == bucket.end()) { // == myVector.end() means the element was not found
+			bucketNumber = (bucketNumber + 1) % moduloHashing;
+			bucket = this->buckets[bucketNumber].getValues();
+			nbAccess++;
+		}
+		else {
+			found = true;
+		}
+		i++;
+	}
+	this->buckets[bucketNumber].removeValue(value);
+	return nbAccess;
+	/*
 	int bucketNumber = value % moduloHashing;
 	this->buckets[bucketNumber].removeValue(value);
 	//Manage collisions, value could be in another bucket
+	*/
 }
 
-int HashTable::search(int value)
+SearchResult HashTable::search(int value)
 {
 	int bucketNumber = value % moduloHashing;
 	int i = 0;
+	int nbAccess = 0;
 	while (i < moduloHashing) {
+		nbAccess++;
 		if (this->buckets[bucketNumber].search(value)) {
-			return bucketNumber;
+			return SearchResult(bucketNumber,nbAccess);
 		}
 		i++;
 		bucketNumber++;
 	}
 	throw ValueNotFoundException();
-	return -1;
+	return SearchResult(nbAccess,-1);
 }
 
-void HashTable::swapAndSort(int value, int position, int bucketNumber)
+void HashTable::swapAndSort(int value, int position, int bucketNumber, int& nbAccess)
 {
 	int tmpValue = this->buckets[bucketNumber].getValues()[position];
 	this->buckets[bucketNumber].setValue(value, position);
+	nbAccess++;
 	//this->buckets[bucketNumber].getValues()[position] = value;
 	//std::cout << "value? " << value << "dans bucket? " << this->buckets[bucketNumber].getValues()[position] << std::endl;
 
@@ -85,14 +115,14 @@ void HashTable::swapAndSort(int value, int position, int bucketNumber)
 	if (position >= maxSize) {
 		std::cout << "new separator : " << tmpValue << std::endl;
 		this->separators[bucketNumber] = tmpValue;
-		swapAndSort(tmpValue, 0, bucketNumber + 1);
+		swapAndSort(tmpValue, 0, bucketNumber + 1, nbAccess);
 	}
 	else if (this->buckets[bucketNumber].getValues()[position] == -1) {
 		//this->buckets[bucketNumber].getValues()[position] = tmpValue;
 		this->buckets[bucketNumber].setValue(tmpValue, position);
 	}
 	else {
-		swapAndSort(tmpValue, position, bucketNumber);
+		swapAndSort(tmpValue, position, bucketNumber, nbAccess);
 	}
 }
 
