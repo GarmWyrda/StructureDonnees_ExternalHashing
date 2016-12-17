@@ -51,7 +51,8 @@ int HashTable::addValueWithSeparator(int value)
 			i = 0;
 		}
 	}
-	swapAndSort(value, i, bucketNumber,nbAccess);
+	
+	swapAndSort(value, i, bucketNumber, nbAccess);
 	return nbAccess;
 }
 
@@ -104,6 +105,16 @@ SearchResult HashTable::search(int value)
 void HashTable::swapAndSort(int value, int position, int bucketNumber, int& nbAccess)
 {
 	int tmpValue = this->buckets[bucketNumber].getValues()[position];
+	if (tmpValue != -1 && tmpValue < value) {
+		if (position < maxSize-1) {
+			swapAndSort(value, position + 1, bucketNumber, nbAccess);
+			return;
+		}
+		else {
+			swapAndSort(value, 0, bucketNumber + 1, nbAccess);
+			return;
+		}
+	}
 	this->buckets[bucketNumber].setValue(value, position);
 	nbAccess++;
 	//this->buckets[bucketNumber].getValues()[position] = value;
