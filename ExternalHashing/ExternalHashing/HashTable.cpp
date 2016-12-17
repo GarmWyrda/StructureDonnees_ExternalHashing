@@ -37,7 +37,8 @@ int HashTable::addValueWithSeparator(int value)
 {
 	int nbAccess = 0;
 	int bucketNumber = value % moduloHashing;
-	while (this->separators[bucketNumber] != -1 && signature(value) > this->separators[bucketNumber]) {
+	
+	while (this->separators[bucketNumber] != -1 && signature(value) >= this->separators[bucketNumber]) {
 		bucketNumber++;
 	}
 	int i = 0;
@@ -125,6 +126,22 @@ SearchResult HashTable::search(int value)
 	}
 	throw ValueNotFoundException();
 	return SearchResult(nbAccess,-1);
+}
+
+SearchResult HashTable::searchWithSeparator(int value)
+{
+	int nbAccess = 0;
+	int bucketNumber = value % moduloHashing;
+	while (this->separators[bucketNumber] != -1 && signature(value) >= this->separators[bucketNumber]) {
+		bucketNumber++;
+	}
+	nbAccess++;
+	if (this->buckets[bucketNumber].search(value)) {
+		return SearchResult(bucketNumber, nbAccess);
+	}
+	else {
+		throw ValueNotFoundException();
+	}
 }
 
 void HashTable::swapAndSort(int value, int position, int bucketNumber, int& nbAccess)

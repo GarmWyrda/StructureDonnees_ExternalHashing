@@ -61,8 +61,10 @@ void CommandProcessor::processCommand(string command)
 		std::cout << "Valeur a rechercher ? ";
 		getline(std::cin, input);
 		int value = stoi(input);
-		SearchResult result = hashTable->search(value);
-		std::cout << "Valeur trouvee dans le Bucket " << result.getBucketNumber() << " Nombre d'acces disque : "  << result.getNbAccess() << std::endl;
+		SearchResult result = hashTable->searchWithSeparator(value);
+		std::cout << "Valeur trouvee dans le Bucket " << result.getBucketNumber() << " - Nombre d'acces disque (avec separateurs) : "  << result.getNbAccess() << std::endl;
+		SearchResult resultNoSeparator = hashTable->search(value);
+		std::cout << "Valeur trouvee dans le Bucket " << resultNoSeparator.getBucketNumber() << " - Nombre d'acces disque (sans separateurs) : " << resultNoSeparator.getNbAccess() << std::endl;
 	}
 	else {
 		std::cout << "Commande invalide. Usage : " << std::endl;
