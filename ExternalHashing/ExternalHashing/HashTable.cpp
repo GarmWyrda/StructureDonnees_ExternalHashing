@@ -102,6 +102,23 @@ SearchResult HashTable::search(int value)
 	return SearchResult(nbAccess,-1);
 }
 
+SearchResult HashTable::searchWithSeparator(int value)
+{
+	int bucketNumber = value % moduloHashing;
+	int i = 0;
+	int nbAccess = 0;
+	while (i < moduloHashing) {
+		nbAccess++;
+		if (this->buckets[bucketNumber].search(value)) {
+			return SearchResult(bucketNumber, nbAccess);
+		}
+		i++;
+		bucketNumber++;
+	}
+	throw ValueNotFoundException();
+	return SearchResult(nbAccess, -1);
+}
+
 void HashTable::swapAndSort(int value, int position, int bucketNumber, int& nbAccess)
 {
 	int tmpValue = this->buckets[bucketNumber].getValues()[position];

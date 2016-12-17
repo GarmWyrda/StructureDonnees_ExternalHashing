@@ -18,6 +18,7 @@ public:
 	int addValueWithSeparator(int value);
 	int removeValue(int value);
 	SearchResult search(int value);
+	SearchResult searchWithSeparator(int value);
 	void swapAndSort(int value, int position, int bucketNumber, int& nbAccess);
 	int signature(int value);
 	friend ostream& operator<<(ostream& ostr, HashTable& hashtable);
