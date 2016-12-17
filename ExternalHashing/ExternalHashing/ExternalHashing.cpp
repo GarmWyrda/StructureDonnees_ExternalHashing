@@ -16,7 +16,7 @@ int main()
 	string input;
 	std::srand(std::time(0)); // use current time as seed for random generator
 	bool shouldExit = false;
-	std::cout << "Combien d'entrees voulez vous ajouter a la table ?" << std::endl;
+	std::cout << "Combien d'entrees voulez vous ajouter a la table ? taille 25 max" << std::endl;
 	getline(std::cin, input);
 	std::cout << "Generation de la table" << std::endl;
 	int n = stoi(input);

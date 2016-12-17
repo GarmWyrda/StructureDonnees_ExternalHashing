@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CommandProcessor.h"
-
+#include "FullTableException.h"
+#include "ValueNotFoundException.h"
 
 CommandProcessor::CommandProcessor(HashTable* hashTable, bool& shouldExit) : shouldExit(shouldExit)
 {
@@ -42,16 +43,27 @@ void CommandProcessor::processCommand(string command)
 		getline(std::cin, input);
 		int value = stoi(input);
 		//int nbAccess = hashTable->addValue(value);
-		int nbAccess = hashTable->addValueWithSeparator(value);
-		std::cout << "Valeur ajoutee dans le bucket, nobmre d'acces disque :  " << nbAccess  << "." << std::endl;
+		try {
+			int nbAccess = hashTable->addValueWithSeparator(value);
+			std::cout << "Valeur ajoutee dans le bucket, nobmre d'acces disque :  " << nbAccess << "." << std::endl;
+		}
+		catch (FullTableException ex) {
+			std::cout << "Impossible, la table est pleine" << std::endl;
+		}
 	}
 	else if (command == "supprimer") {
 		string input;
 		std::cout << "Valeur a supprimer ? ";
 		getline(std::cin, input);
 		int value = stoi(input);
-		int nbAccess = hashTable->removeValue(value);
-		std::cout << "Valeur supprimee dans le bucket, nobmre d'acces disque :  " << nbAccess << "." << std::endl;
+		try {
+			int nbAccess = hashTable->removeValue(value);
+			std::cout << "Valeur supprimee dans le bucket, nobmre d'acces disque :  " << nbAccess << "." << std::endl;
+		}
+		catch (ValueNotFoundException) {
+			std::cout << "Valeur non trouvee "<< std::endl;
+		}
+		
 	}
 	else if (command == "afficher") {
 		printHashTable();
@@ -61,10 +73,15 @@ void CommandProcessor::processCommand(string command)
 		std::cout << "Valeur a rechercher ? ";
 		getline(std::cin, input);
 		int value = stoi(input);
-		SearchResult result = hashTable->searchWithSeparator(value);
-		std::cout << "Valeur trouvee dans le Bucket " << result.getBucketNumber() << " - Nombre d'acces disque (avec separateurs) : "  << result.getNbAccess() << std::endl;
-		SearchResult resultNoSeparator = hashTable->search(value);
-		std::cout << "Valeur trouvee dans le Bucket " << resultNoSeparator.getBucketNumber() << " - Nombre d'acces disque (sans separateurs) : " << resultNoSeparator.getNbAccess() << std::endl;
+		try{
+			SearchResult result = hashTable->searchWithSeparator(value);
+			std::cout << "Valeur trouvee dans le Bucket " << result.getBucketNumber() << " - Nombre d'acces disque (avec separateurs) : "  << result.getNbAccess() << std::endl;
+			SearchResult resultNoSeparator = hashTable->search(value);
+			std::cout << "Valeur trouvee dans le Bucket " << resultNoSeparator.getBucketNumber() << " - Nombre d'acces disque (sans separateurs) : " << resultNoSeparator.getNbAccess() << std::endl;
+		}
+		catch (ValueNotFoundException) {
+			std::cout << "Valeur non trouvee " << std::endl;
+		}
 	}
 	else {
 		std::cout << "Commande invalide. Usage : " << std::endl;
