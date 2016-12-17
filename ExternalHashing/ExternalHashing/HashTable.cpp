@@ -43,15 +43,19 @@ int HashTable::addValueWithSeparator(int value)
 		bucketNumber++;
 	}
 	int i = 0;
+	int j = 0;
 	nbAccess++;
-	while (i < moduloHashing && this->buckets[bucketNumber].getValues()[i] != -1 && value > this->buckets[bucketNumber].getValues()[i]) {
+	while (j < moduloHashing && i < moduloHashing && this->buckets[bucketNumber].getValues()[i] != -1 && value > this->buckets[bucketNumber].getValues()[i]) {
 		i++;
 		if (i == moduloHashing) {
-			bucketNumber++;
+			bucketNumber = (bucketNumber + 1) % moduloHashing;
+			j++;
 			i = 0;
 		}
 	}
-	
+	if (j == moduloHashing) {
+		throw FullTableException();
+	}
 	swapAndSort(value, i, bucketNumber, nbAccess);
 	return nbAccess;
 }
@@ -144,7 +148,8 @@ void HashTable::swapAndSort(int value, int position, int bucketNumber, int& nbAc
 	if (position >= maxSize) {
 		std::cout << "new separator : " << tmpValue << std::endl;
 		this->separators[bucketNumber] = tmpValue;
-		swapAndSort(tmpValue, 0, bucketNumber + 1, nbAccess);
+		int newBucket = (bucketNumber + 1) % moduloHashing;
+		swapAndSort(tmpValue, 0, newBucket, nbAccess);
 	}
 	else if (this->buckets[bucketNumber].getValues()[position] == -1) {
 		//this->buckets[bucketNumber].getValues()[position] = tmpValue;
