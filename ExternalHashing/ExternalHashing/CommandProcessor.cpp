@@ -41,7 +41,8 @@ void CommandProcessor::processCommand(string command)
 		std::cout << "Valeur a inserer ? ";
 		getline(std::cin, input);
 		int value = stoi(input);
-		int nbAccess = hashTable->addValue(value);
+		//int nbAccess = hashTable->addValue(value);
+		int nbAccess = hashTable->addValueWithSeparator(value);
 		std::cout << "Valeur ajoutee dans le bucket, nobmre d'acces disque :  " << nbAccess  << "." << std::endl;
 	}
 	else if (command == "supprimer") {
