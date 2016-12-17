@@ -23,7 +23,8 @@ int main()
 	HashTable table1 = HashTable();
 	for (int i = 0; i < n; i++) {
 		int random_variable = std::rand();
-		table1.addValue(random_variable % MAX_VALUE);
+		//table1.addValue(random_variable % MAX_VALUE);
+		table1.addValueWithSeparator(random_variable % MAX_VALUE);
 	}
 	CommandProcessor cmdProcessor = CommandProcessor(&table1,shouldExit);
 	cmdProcessor.processCommand("afficher");

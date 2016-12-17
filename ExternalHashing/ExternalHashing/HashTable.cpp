@@ -2,7 +2,7 @@
 #include "HashTable.h"
 #include "FullTableException.h"
 #include "ValueNotFoundException.h"
-
+#include <iostream>
 
 HashTable::HashTable()
 {
@@ -32,13 +32,20 @@ void HashTable::addValue(int value)
 void HashTable::addValueWithSeparator(int value)
 {
 	int bucketNumber = value % moduloHashing;
-	while (signature(value) > this->separators[bucketNumber]) {
+	//std::cout << bucketNumber << std::endl;
+	//std::cout << this->separators[bucketNumber] << std::endl;
+	while (this->separators[bucketNumber] != -1 && signature(value) > this->separators[bucketNumber]) {
 		bucketNumber++;
 	}
 	int i = 0;
-	while (value > this->buckets[bucketNumber].getValues()[i]) {
+	while (i < moduloHashing && this->buckets[bucketNumber].getValues()[i] != -1 && value > this->buckets[bucketNumber].getValues()[i]) {
 		i++;
+		if (i == moduloHashing) {
+			bucketNumber++;
+			i = 0;
+		}
 	}
+	
 	swapAndSort(value, i, bucketNumber);
 }
 
@@ -67,14 +74,22 @@ int HashTable::search(int value)
 void HashTable::swapAndSort(int value, int position, int bucketNumber)
 {
 	int tmpValue = this->buckets[bucketNumber].getValues()[position];
-	this->buckets[bucketNumber].getValues()[position] = value;
+	this->buckets[bucketNumber].setValue(value, position);
+	//this->buckets[bucketNumber].getValues()[position] = value;
+	//std::cout << "value? " << value << "dans bucket? " << this->buckets[bucketNumber].getValues()[position] << std::endl;
 
+	if (tmpValue == -1) {
+		return;
+	}
 	position++;
-	if (position > maxSize) {
+	if (position >= maxSize) {
+		std::cout << "new separator : " << tmpValue << std::endl;
+		this->separators[bucketNumber] = tmpValue;
 		swapAndSort(tmpValue, 0, bucketNumber + 1);
 	}
 	else if (this->buckets[bucketNumber].getValues()[position] == -1) {
-		this->buckets[bucketNumber].getValues()[position] = tmpValue;
+		//this->buckets[bucketNumber].getValues()[position] = tmpValue;
+		this->buckets[bucketNumber].setValue(tmpValue, position);
 	}
 	else {
 		swapAndSort(tmpValue, position, bucketNumber);

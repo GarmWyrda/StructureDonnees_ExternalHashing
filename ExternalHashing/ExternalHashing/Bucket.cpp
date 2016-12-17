@@ -19,6 +19,11 @@ vector<int> Bucket::getValues()
 	return this->values;
 }
 
+void Bucket::setValue(int value, int position)
+{
+	this->values[position] = value;
+}
+
 bool Bucket::isFull()
 {
 	int i = 0;

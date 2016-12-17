@@ -15,6 +15,7 @@ public:
 	Bucket();
 	~Bucket();
 	vector<int> getValues();
+	void setValue(int value, int position);
 	bool isFull();
 	void addValue(int value);
 	void removeValue(int value);
