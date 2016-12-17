@@ -38,11 +38,12 @@ int HashTable::addValueWithSeparator(int value)
 	int nbAccess = 0;
 	int bucketNumber = value % moduloHashing;
 	//std::cout << bucketNumber << std::endl;
-	//std::cout << this->separators[bucketNumber] << std::endl;
+	//std::cout << this->separators[bucketNumber] << std::endl
 	while (this->separators[bucketNumber] != -1 && signature(value) > this->separators[bucketNumber]) {
 		bucketNumber++;
 	}
 	int i = 0;
+	nbAccess++;
 	while (i < moduloHashing && this->buckets[bucketNumber].getValues()[i] != -1 && value > this->buckets[bucketNumber].getValues()[i]) {
 		i++;
 		if (i == moduloHashing) {
@@ -50,8 +51,8 @@ int HashTable::addValueWithSeparator(int value)
 			i = 0;
 		}
 	}
-	
-	swapAndSort(value, i, bucketNumber);
+	swapAndSort(value, i, bucketNumber,nbAccess);
+	return nbAccess;
 }
 
 int HashTable::removeValue(int value)
