@@ -37,8 +37,6 @@ int HashTable::addValueWithSeparator(int value)
 {
 	int nbAccess = 0;
 	int bucketNumber = value % moduloHashing;
-	//std::cout << bucketNumber << std::endl;
-	//std::cout << this->separators[bucketNumber] << std::endl
 	while (this->separators[bucketNumber] != -1 && signature(value) > this->separators[bucketNumber]) {
 		bucketNumber++;
 	}
@@ -89,6 +87,29 @@ int HashTable::removeValue(int value)
 	*/
 }
 
+/*
+int HashTable::removeValueWithSeparator(int value)
+{
+	int nbAccess = 0;
+	int bucketNumber = value % moduloHashing;
+	while (this->separators[bucketNumber] != -1 && signature(value) >= this->separators[bucketNumber]) {
+		bucketNumber++;
+	}
+
+	int i = 0;
+	nbAccess++;
+	while (i < maxSize) {
+		if (this->buckets[bucketNumber].getValues()[i] == value) {
+			this->buckets[bucketNumber].setValue(-1, i);
+			
+		}
+		i++;
+	}
+	throw ValueNotFoundException();
+	return 0;
+}
+*/
+
 SearchResult HashTable::search(int value)
 {
 	int bucketNumber = value % moduloHashing;
@@ -100,7 +121,7 @@ SearchResult HashTable::search(int value)
 			return SearchResult(bucketNumber,nbAccess);
 		}
 		i++;
-		bucketNumber++;
+		bucketNumber = (bucketNumber +1) % moduloHashing;
 	}
 	throw ValueNotFoundException();
 	return SearchResult(nbAccess,-1);
